@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  k8s-echo-hello
+  namespace: default
+  labels:
+    app:  k8s-echo-hello
+spec:
+  selector:
+    matchLabels:
+      app: k8s-echo-hello
+  replicas: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  k8s-echo-hello
+    spec:
+      containers:
+      - name:  k8s-echo-hello
+        image: kevincarvalhodejesus/echo-api
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort:  3333
+          name:  k8s-echo-hello
+      restartPolicy: Always
+---

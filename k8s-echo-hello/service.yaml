@@ -1,0 +1,17 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-echo-hello
+  namespace: default
+spec:
+  selector:
+    app: k8s-echo-hello
+  type: LoadBalancer
+  ports:
+  - name: k8s-echo-hello
+    port: 3030     # exposed service port
+    targetPort: 3333 # port on pod where the service is running
+    nodePort: 30001
+---
+
